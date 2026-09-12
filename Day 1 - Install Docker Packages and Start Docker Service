@@ -1,0 +1,53 @@
+1. Login to App Server 2
+
+From the jump host:
+
+ssh stapp02
+
+Check the OS:
+
+cat /etc/os-release
+
+
+2. Install Docker CE
+
+If App Server 2 is CentOS/RHEL/Rocky/AlmaLinux, run:
+
+sudo dnf install -y dnf-plugins-core
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
+3. Start Docker
+sudo systemctl start docker
+
+
+Enable it at boot:
+sudo systemctl enable docker
+
+
+4. Verify
+sudo systemctl status docker
+
+You should see:
+Active: active (running)
+
+Then:
+
+docker --version
+docker compose version
+If the task specifically says "docker compose package"
+
+On modern Docker installations, Docker Compose V2 is provided as:
+
+docker-compose-plugin
+
+and you use it as:
+
+docker compose version
+
+Complete command sequence:
+
+sudo dnf install -y dnf-plugins-core && sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && sudo systemctl enable --now docker
+
+If stapp02 gives you an error with any command, paste the error here and I'll give you the exact fix.
